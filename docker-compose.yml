@@ -11,6 +11,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
 
   db:
     image: postgres
