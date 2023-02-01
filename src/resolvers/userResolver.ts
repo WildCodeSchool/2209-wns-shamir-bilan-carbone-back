@@ -5,19 +5,61 @@ import userService from "../services/userService";
 
 @Resolver(User)
 export class UserResolver {
-  @Query(() => User)
+  @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     return await userService.getAll();
+  }
+
+  @Query(() => User)
+  async findUserByEmail(@Arg("email") email: string): Promise<User> {
+    return await userService.getByEmail(email);
   }
 
   @Mutation(() => User)
   async createUser(
     @Arg("email") email: string,
-    @Arg("password") password: string
+    @Arg("password") password: string,
+    @Arg("firstName") firstName: string,
+    @Arg("lastName") lastName: string
   ): Promise<User> {
-    const userFromDB = await userService.create(email, password);
+    const userFromDB = await userService.create(
+      email,
+      password,
+      firstName,
+      lastName
+    );
     console.log(userFromDB);
     return userFromDB;
+  }
+
+  // updateUser
+  @Mutation(() => User)
+  async updateUser(
+    @Arg("id") id: number,
+    @Arg("email") email: string,
+    @Arg("password") password: string,
+    @Arg("firstName") firstName: string,
+    @Arg("lastName") lastName: string
+  ): Promise<User> {
+    const updateUser = await userService.update(
+      id,
+      email,
+      password,
+      firstName,
+      lastName
+    );
+    return updateUser;
+  }
+
+  // deleteUser
+  @Mutation(() => Boolean)
+  async deleteUser(@Arg("email") email: string): Promise<Boolean> {
+    try {
+      await userService.delete(email);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   @Mutation(() => String)

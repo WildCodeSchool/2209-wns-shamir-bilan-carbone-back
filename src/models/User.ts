@@ -15,6 +15,15 @@ export class User {
   @Column()
   hashed_password: string;
 
+  @Field()
   @Column()
   role: string;
+
+  @Field()
+  @Column()
+  firstName: string;
+
+  @Field()
+  @Column()
+  lastName: string;
 }
