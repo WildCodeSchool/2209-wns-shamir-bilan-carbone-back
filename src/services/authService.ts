@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export default {
   /**
