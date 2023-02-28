@@ -1,12 +1,16 @@
-import { ObjectType, Field } from "type-graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ObjectType, Field } from "type-graphql";
 
 @ObjectType()
 @Entity()
-export default class BaseCarbone {
+export default class Agribalyse {
   @Field({ nullable: true })
   @PrimaryGeneratedColumn()
   _i?: string;
+
+  @Field({ nullable: true })
+  @Column()
+  _id?: string;
 
   @Field({ nullable: true })
   @Column()
@@ -14,9 +18,13 @@ export default class BaseCarbone {
 
   @Field({ nullable: true })
   @Column()
-  co2?: string;
+  group?: string;
 
   @Field({ nullable: true })
   @Column()
-  unit?: string;
+  subgroup?: string;
+
+  @Field({ nullable: true })
+  @Column()
+  empreinte?: number;
 }

@@ -3,7 +3,6 @@ import createServer from "../tools/server";
 
 describe("User resolver", () => {
   let server: ApolloServer;
-
   beforeAll(async () => {
     server = await createServer();
   });
@@ -18,8 +17,8 @@ describe("User resolver", () => {
     const response = await server.executeOperation({
       query: getTokenMutation,
       variables: {
-        password: "1234",
-        email: "admin@admin.com",
+        password: "12345",
+        email: "anna@gmail.com",
       },
     });
 
@@ -38,7 +37,7 @@ describe("User resolver", () => {
       query: getTokenMutation,
       variables: {
         password: "dkadaksgjg",
-        email: "admin@admin.com",
+        email: "anna@gmail.com",
       },
     });
     expect(response.errors).toBeDefined();
