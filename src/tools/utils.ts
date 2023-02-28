@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import BaseCarbone from "../models/BaseCarbone";
+import Agribalyse from "../models/Agribalyse";
 import { User } from "../models/User";
 
 export const dataSource = new DataSource({
@@ -10,5 +11,5 @@ export const dataSource = new DataSource({
   password: "admin",
   database: "carbone",
   synchronize: true,
-  entities: [User, BaseCarbone],
+  entities: [User, BaseCarbone, Agribalyse],
 });
