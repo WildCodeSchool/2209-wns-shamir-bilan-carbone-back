@@ -14,3 +14,4 @@ export const dataSource = new DataSource({
   synchronize: true,
   entities: [User, BaseCarbone, ApiAgribalyse, Agribalyse],
 });
+
