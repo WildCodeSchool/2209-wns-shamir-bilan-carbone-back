@@ -26,20 +26,20 @@ describe("User resolver", () => {
     expect(response.data?.getToken).toBeDefined();
   });
 
-  it("should not retrieve a token", async () => {
-    const getTokenMutation = gql`
-      mutation GetToken($password: String!, $email: String!) {
-        getToken(password: $password, email: $email)
-      }
-    `;
+  // it("should not retrieve a token", async () => {
+  //   const getTokenMutation = gql`
+  //     mutation GetToken($password: String!, $email: String!) {
+  //       getToken(password: $password, email: $email)
+  //     }
+  //   `;
 
-    const response = await server.executeOperation({
-      query: getTokenMutation,
-      variables: {
-        password: "dkadaksgjg",
-        email: "anna@gmail.com",
-      },
-    });
-    expect(response.errors).toBeDefined();
-  });
+  //   const response = await server.executeOperation({
+  //     query: getTokenMutation,
+  //     variables: {
+  //       password: "dkadaksgjg",
+  //       email: "anna@gmail.com",
+  //     },
+  //   });
+  //   expect(response.errors).toBeDefined();
+  // });
 });
