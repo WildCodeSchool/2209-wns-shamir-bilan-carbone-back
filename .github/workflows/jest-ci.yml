@@ -27,4 +27,4 @@ jobs:
       - name: Connect to PostgreSQL
         run: npm run test
         env:
-          JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+          JWT_SECRET_KEY: MA_SUPER_CLEF
