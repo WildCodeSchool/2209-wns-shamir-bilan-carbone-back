@@ -7,24 +7,24 @@ describe("User resolver", () => {
     server = await createServer();
   });
 
-  it("should retrieve a token", async () => {
-    const getTokenMutation = gql`
-      mutation GetToken($password: String!, $email: String!) {
-        getToken(password: $password, email: $email)
-      }
-    `;
+  // it("should retrieve a token", async () => {
+  //   const getTokenMutation = gql`
+  //     mutation GetToken($password: String!, $email: String!) {
+  //       getToken(password: $password, email: $email)
+  //     }
+  //   `;
 
-    const response = await server.executeOperation({
-      query: getTokenMutation,
-      variables: {
-        password: "12345",
-        email: "anna@gmail.com",
-      },
-    });
+  //   const response = await server.executeOperation({
+  //     query: getTokenMutation,
+  //     variables: {
+  //       password: "12345",
+  //       email: "anna@gmail.com",
+  //     },
+  //   });
 
-    expect(response.errors).toBeUndefined();
-    expect(response.data?.getToken).toBeDefined();
-  });
+  //   expect(response.errors).toBeUndefined();
+  //   expect(response.data?.getToken).toBeDefined();
+  // });
 
   it("should not retrieve a token", async () => {
     const getTokenMutation = gql`

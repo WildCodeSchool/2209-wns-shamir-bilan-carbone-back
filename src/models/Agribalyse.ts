@@ -1,30 +1,27 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
 @ObjectType()
 @Entity()
 export default class Agribalyse {
-  @Field({ nullable: true })
+  @Field()
+  @Column()
   @PrimaryGeneratedColumn()
-  _i?: string;
+  id: number;
+
+  @Field()
+  @Column()
+  idAgr: string;
 
   @Field({ nullable: true })
-  @Column()
-  _id?: string;
-
-  @Field({ nullable: true })
-  @Column()
-  name?: string;
-
-  @Field({ nullable: true })
-  @Column()
-  group?: string;
-
-  @Field({ nullable: true })
-  @Column()
+  @Column({ nullable: true })
   subgroup?: string;
 
   @Field({ nullable: true })
-  @Column()
-  empreinte?: number;
+  @Column({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  empreinte?: string;
 }

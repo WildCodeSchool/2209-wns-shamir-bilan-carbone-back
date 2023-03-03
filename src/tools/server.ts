@@ -6,12 +6,18 @@ import { UserResolver } from "../resolvers/userResolver";
 import authService from "../services/authService";
 import { ApiBaseCarboneResolver } from "../resolvers/apiBaseCarboneResolver";
 import { ApiAgribalyseResolver } from "../resolvers/apiAgribalyseResolver";
+import { AgribalyseResolver } from "../resolvers/AgribalyseResolver";
 
 async function createServer(): Promise<ApolloServer> {
   dotenv.config();
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [UserResolver, ApiBaseCarboneResolver, ApiAgribalyseResolver],
+    resolvers: [
+      UserResolver,
+      ApiBaseCarboneResolver,
+      ApiAgribalyseResolver,
+      AgribalyseResolver,
+    ],
     authChecker: ({ context }, roles) => {
       console.log("CONTEXT", context);
       console.log("ROLES", roles);
