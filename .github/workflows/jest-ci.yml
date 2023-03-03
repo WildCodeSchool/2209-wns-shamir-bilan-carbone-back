@@ -10,9 +10,9 @@ jobs:
       db:
         image: postgres
         env:
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: carbone
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_DB}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -27,4 +27,4 @@ jobs:
       - name: Connect to PostgreSQL
         run: npm run test
         env:
-          JWT_SECRET_KEY: MA_SUPER_CLEF
+          JWT_SECRET_KEY: ${JWT_SECRET_KEY}
