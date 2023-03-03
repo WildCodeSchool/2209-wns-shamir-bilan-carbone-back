@@ -30,7 +30,6 @@ jobs:
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
 
   docker:
-    needs: build-server
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
