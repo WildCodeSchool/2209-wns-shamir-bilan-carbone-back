@@ -1,10 +1,5 @@
-import { Repository } from "typeorm";
-import { User } from "../models/User";
-import { dataSource } from "../tools/utils";
 import * as bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-const repository: Repository<User> = dataSource.getRepository(User);
 
 export default {
   /**
@@ -45,14 +40,9 @@ export default {
     return jwt.verify(token, process.env.JWT_SECRET_KEY);
   },
 
-  hasRole: async (email: string, role: string) => {
+  hasRole: (email: string, role: string) => {
     // get the user in DB
-    const user = await repository.findOne({ where: { email } });
     // verify roles
-    if (user?.role !== "ADMIN") {
-      return false;
-    }
     // return true or false
-    return true;
   },
 };

@@ -1,5 +1,10 @@
 import { DataSource } from "typeorm";
+import BaseCarbone from "../models/BaseCarbone";
+import ApiAgribalyse from "../models/ApiAgribalyse";
 import { User } from "../models/User";
+import Agribalyse from "../models/Agribalyse";
+
+
 
 export const dataSource = new DataSource({
   type: "postgres",
@@ -9,5 +14,7 @@ export const dataSource = new DataSource({
   password: "admin",
   database: "carbone",
   synchronize: true,
-  entities: [User],
+  entities: [User, BaseCarbone, ApiAgribalyse, Agribalyse],
 });
+
+
