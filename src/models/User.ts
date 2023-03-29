@@ -1,21 +1,23 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType, Field, ID } from "type-graphql";
+// import { MaxLength } from "class-validator";
 
 @ObjectType()
 @Entity()
 export class User {
-  @Field()
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
+  // @Column("text", { unique: false })
   @Column()
   email: string;
 
   @Column()
   hashed_password: string;
 
-  @Field()
+  // @Field()
   @Column()
   role: string;
 

@@ -87,4 +87,15 @@ export default {
     // delete the user
     await repository.remove(user);
   },
+
+  /**
+   * Returns the user with the specified id
+   * @param id user id
+   * @returns User object
+   */
+  getById: async (id: number): Promise<User> => {
+    const user = await repository.findOneOrFail({ where: { id } });
+    if (!user) throw new Error("User not found.");
+    return user;
+  },
 };
