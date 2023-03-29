@@ -11,4 +11,20 @@ export class RecipeResolver {
   async getAllRecipes(): Promise<Recipe[]> {
     return await recipeService.getAll();
   }
+
+  //   @Authorized("ADMIN")
+  @Mutation(() => Recipe)
+  async createRecipe(
+    @Arg("name", { nullable: true }) name?: string,
+    @Arg("description", { nullable: true }) description?: string,
+    @Arg("calcul", { nullable: true }) calcul?: string
+  ): Promise<Recipe> {
+    const recipe = await recipeService.create(
+      name || "",
+      description || "",
+      calcul || ""
+    );
+    console.log(recipe);
+    return recipe;
+  }
 }
