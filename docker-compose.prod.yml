@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  back:
+    image: agnija/just-reduce-back
+    ports:
+      - 5002:5002
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: carbone
+      PGDATA: /var/lib/postgresql/data/customDataFolder
+    volumes:
+      - ./dbData:/var/lib/postgresql/data/customDataFolder
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d carbone -U admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
