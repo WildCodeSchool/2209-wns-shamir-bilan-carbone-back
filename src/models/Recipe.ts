@@ -1,12 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
+import Agribalyse from "./Agribalyse";
 
 @ObjectType()
 @Entity()
 export class Recipe {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
@@ -19,4 +26,17 @@ export class Recipe {
   @Field({ nullable: true })
   @Column({ nullable: true })
   calcul?: string;
+
+  // @Field(() => [Agribalyse], { nullable: true })
+  // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+  //   eager: true,
+  // })
+  // agribalyses?: Agribalyse[];
+
+  @Field(() => [Agribalyse], { nullable: true })
+  @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+    cascade: true,
+  })
+  @JoinColumn()
+  agribalyses: Agribalyse[];
 }

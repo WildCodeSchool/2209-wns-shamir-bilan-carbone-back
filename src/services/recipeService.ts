@@ -4,7 +4,8 @@ import { dataSource } from "../tools/utils";
 
 const recipeRepository: Repository<Recipe> = dataSource.getRepository(Recipe);
 
-export default {
+// export default {
+const recipeService = {
   /**
    * Returns list of recipes from DB
    * @returns array of Recipes
@@ -13,22 +14,21 @@ export default {
     return await recipeRepository.find();
   },
 
+  // getByName: async (name: string) => {
+  //   return await recipeRepository.findOneBy({
+  //     name,
+  //   });
+  // },
+
   /**
    * Create a new recipe in the database
-   * @param name recipe name
-   * @param description recipe description
-   * @param calcul recipe calcul
-   * @returns
+   * @param recipeData recipeData such as name, description, calcul, Agrybalyse obj
+   * @returns recipe object
    */
-  create: async (
-    name: string,
-    description: string,
-    calcul: string
-  ): Promise<Recipe> => {
-    const newRecipe = new Recipe();
-    newRecipe.name = name;
-    newRecipe.description = description;
-    newRecipe.calcul = calcul;
-    return await recipeRepository.save(newRecipe);
+  create: async (recipeData: Recipe): Promise<Recipe> => {
+    const recipe = await recipeRepository.save(recipeData);
+    return recipe;
   },
 };
+
+export default recipeService;
