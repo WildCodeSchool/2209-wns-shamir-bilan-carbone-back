@@ -1,4 +1,5 @@
 import { Recipe } from "../models/Recipe";
+import { Agribalyse } from "../models/Agribalyse";
 import recipeService from "../services/recipeService";
 import { Arg, Mutation, Query, Resolver, Ctx, Authorized } from "type-graphql";
 import { CreateRecipeInputType } from "../inputs/CreateRecipeInputType";
@@ -19,9 +20,25 @@ export class RecipeResolver {
   // To obtain data from users, we can build
   // an input type to specify what fields are necessary for this mutation.
   //   @Authorized("ADMIN")
-  @Mutation(() => Recipe)
-  async createRecipe(@Arg("data") data: CreateRecipeInputType) {
-    // const recipe = Recipe.create(data);
-    return await recipeService.create(data);
-  }
+  // @Mutation(() => Recipe)
+  // async createRecipe(@Arg("data") data: CreateRecipeInputType) {
+  //   // const recipe = Recipe.create(data);
+  //   return await recipeService.create(data);
+  // }
+
+  // @Mutation(() => Recipe)
+  // async createRecipe(
+  //   @Arg("data") data: CreateRecipeInputType
+  // ): Promise<Recipe> {
+  //   const agribalyse: Agribalyse = await agribalyseService.getById(
+  //     data.agribalyseId
+  //   );
+  //   const recipeData = {
+  //     name: data.name,
+  //     description: data.description,
+  //     calcul: data.calcul,
+  //     agribalyse: agribalyse,
+  //   };
+  //   return await recipeService.create(recipeData);
+  // }
 }

@@ -11,13 +11,13 @@ import { Recipe } from "./Recipe";
 @ObjectType()
 @Entity()
 export default class Agribalyse {
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   idAgr: string;
 
   @Field({ nullable: true })

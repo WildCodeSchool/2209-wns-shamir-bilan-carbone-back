@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
-import Agribalyse from "./Agribalyse";
+import { Agribalyse } from "../models/Agribalyse";
 
 @ObjectType()
 @Entity()
@@ -33,10 +33,12 @@ export class Recipe {
   // })
   // agribalyses?: Agribalyse[];
 
-  @Field(() => [Agribalyse], { nullable: true })
-  @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
-    cascade: true,
-  })
-  @JoinColumn()
-  agribalyses: Agribalyse[];
+  // @Field(() => [Agribalyse], { nullable: true })
+  // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+  //   cascade: true,
+  // })
+  // @JoinColumn()
+  // agribalyses?: Agribalyse[];
 }
+
+export default Recipe;

@@ -24,4 +24,8 @@ export default {
   getByName: async (name: string) => {
     return await agribalyseRepository.findOneByOrFail({ name });
   },
+
+  // getById: async (id: number): Promise<Agribalyse | null> => {
+  //   return await agribalyseRepository.findOne(id);
+  // },
 };

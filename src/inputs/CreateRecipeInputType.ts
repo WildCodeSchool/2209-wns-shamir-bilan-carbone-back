@@ -14,6 +14,12 @@ export class CreateRecipeInputType {
   @Field({ nullable: true })
   calcul: string;
 
-  @Field((type) => AgribalyseInput)
-  agribalyse: AgribalyseInput;
+  // @Field((type) => AgribalyseInput)
+  // agribalyse: AgribalyseInput;
+
+  // @Field(() => [AgribalyseInput], { nullable: true })
+  // agribalyses?: AgribalyseInput[];
+
+  @Field()
+  agribalyseId: string; // new field for Agribalyse id
 }
