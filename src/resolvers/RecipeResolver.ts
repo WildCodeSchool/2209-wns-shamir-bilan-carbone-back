@@ -1,5 +1,5 @@
 import { Recipe } from "../models/Recipe";
-import { Agribalyse } from "../models/Agribalyse";
+import Agribalyse from "../models/Agribalyse";
 import recipeService from "../services/recipeService";
 import { Arg, Mutation, Query, Resolver, Ctx, Authorized } from "type-graphql";
 import { CreateRecipeInputType } from "../inputs/CreateRecipeInputType";

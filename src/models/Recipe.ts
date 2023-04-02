@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
-import { Agribalyse } from "../models/Agribalyse";
+import Agribalyse from "../models/Agribalyse";
 
 @ObjectType()
 @Entity()

@@ -37,6 +37,6 @@ export default class Agribalyse {
   // @JoinColumn({ name: "recipe_id" })
   // recipe?: Recipe;
 
-  @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.agribalyses)
-  recipe?: Recipe;
+  // @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.agribalyses)
+  // recipe?: Recipe;
 }
