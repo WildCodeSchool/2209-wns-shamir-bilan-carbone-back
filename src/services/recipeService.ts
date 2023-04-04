@@ -1,8 +1,12 @@
 import { Repository } from "typeorm";
 import { Recipe } from "../models/Recipe";
+import Agribalyse from "../models/Agribalyse";
 import { dataSource } from "../tools/utils";
+import { AgribalyseInput } from "inputs/AgribalyseInput";
 
 const recipeRepository: Repository<Recipe> = dataSource.getRepository(Recipe);
+const agribalyseRepository: Repository<Agribalyse> =
+  dataSource.getRepository(Agribalyse);
 
 // export default {
 const recipeService = {
@@ -14,20 +18,27 @@ const recipeService = {
     return await recipeRepository.find();
   },
 
-  // getByName: async (name: string) => {
-  //   return await recipeRepository.findOneBy({
-  //     name,
-  //   });
-  // },
+  getById: async (id: number): Promise<Recipe | null> => {
+    return await recipeRepository.findOne({ where: { id: id } });
+  },
+
+  getByName: async (name: string) => {
+    return await recipeRepository.findOneBy({
+      name,
+    });
+  },
 
   /**
    * Create a new recipe in the database
-   * @param recipeData recipeData such as name, description, calcul, Agrybalyse obj
+   * @param
    * @returns recipe object
    */
-  create: async (recipeData: Recipe): Promise<Recipe> => {
-    const recipe = await recipeRepository.save(recipeData);
-    return recipe;
+  create: async (name: string, agribalyseIds: number[]): Promise<Recipe> => {
+    const recipe = new Recipe();
+    recipe.name = name;
+    recipe.agribalyses = await agribalyseRepository.findByIds(agribalyseIds);
+
+    return recipeRepository.save(recipe);
   },
 };
 

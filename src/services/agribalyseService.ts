@@ -6,13 +6,11 @@ const agribalyseRepository: Repository<Agribalyse> =
   dataSource.getRepository(Agribalyse);
 
 export default {
-  // new method
   /**
    * Returns list of aliments from DB
    * @returns array of Aliments from Agribalyse
    */
   getAllAliments: async (): Promise<Agribalyse[]> => {
-    // eslint-disable-next-line @typescript-eslint/return-await
     return await agribalyseRepository.find();
   },
 
@@ -25,7 +23,7 @@ export default {
     return await agribalyseRepository.findOneByOrFail({ name });
   },
 
-  // getById: async (id: number): Promise<Agribalyse | null> => {
-  //   return await agribalyseRepository.findOne(id);
-  // },
+  getById: async (id: number): Promise<Agribalyse | null> => {
+    return await agribalyseRepository.findOne({ where: { id: id } });
+  },
 };

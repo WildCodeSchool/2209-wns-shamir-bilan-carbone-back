@@ -27,6 +27,13 @@ export class Recipe {
   @Column({ nullable: true })
   calcul?: string;
 
+  @Field(() => [Agribalyse], { nullable: true })
+  // @Column("json", { nullable: true })
+  @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+    cascade: true,
+  })
+  agribalyses?: Agribalyse[];
+
   // @Field(() => [Agribalyse], { nullable: true })
   // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
   //   eager: true,

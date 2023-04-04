@@ -1,12 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
-import { Recipe } from "./Recipe";
+import { Recipe } from "../models/Recipe";
 
 @ObjectType()
 @Entity()
@@ -32,11 +26,6 @@ export default class Agribalyse {
   @Column({ nullable: true })
   empreinte?: string;
 
-  //this no  @Field(() => Recipe)
-  // @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.agribalyses)
-  // @JoinColumn({ name: "recipe_id" })
-  // recipe?: Recipe;
-
-  // @ManyToOne(() => Recipe, (recipe: Recipe) => recipe.agribalyses)
-  // recipe?: Recipe;
+  @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses)
+  recipe: Recipe;
 }
