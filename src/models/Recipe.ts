@@ -33,19 +33,6 @@ export class Recipe {
     cascade: true,
   })
   agribalyses?: Agribalyse[];
-
-  // @Field(() => [Agribalyse], { nullable: true })
-  // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
-  //   eager: true,
-  // })
-  // agribalyses?: Agribalyse[];
-
-  // @Field(() => [Agribalyse], { nullable: true })
-  // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
-  //   cascade: true,
-  // })
-  // @JoinColumn()
-  // agribalyses?: Agribalyse[];
 }
 
 export default Recipe;

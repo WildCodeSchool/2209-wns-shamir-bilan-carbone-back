@@ -20,6 +20,7 @@ async function createServer(): Promise<ApolloServer> {
       AgribalyseResolver,
       RecipeResolver,
     ],
+    validate: { forbidUnknownValues: false },
     authChecker: ({ context }, roles) => {
       console.log("CONTEXT", context);
       console.log("ROLES", roles);

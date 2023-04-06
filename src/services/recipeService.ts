@@ -2,7 +2,6 @@ import { Repository } from "typeorm";
 import { Recipe } from "../models/Recipe";
 import Agribalyse from "../models/Agribalyse";
 import { dataSource } from "../tools/utils";
-import { AgribalyseInput } from "inputs/AgribalyseInput";
 
 const recipeRepository: Repository<Recipe> = dataSource.getRepository(Recipe);
 const agribalyseRepository: Repository<Agribalyse> =
@@ -36,7 +35,16 @@ const recipeService = {
   create: async (name: string, agribalyseIds: number[]): Promise<Recipe> => {
     const recipe = new Recipe();
     recipe.name = name;
-    recipe.agribalyses = await agribalyseRepository.findByIds(agribalyseIds);
+    const agribalyses = [];
+    for (let agribalyseId of agribalyseIds) {
+      const agribalyse = await agribalyseRepository.findOneByOrFail({
+        id: agribalyseId,
+      });
+
+      agribalyses.push(agribalyse);
+    }
+
+    recipe.agribalyses = agribalyses;
 
     return recipeRepository.save(recipe);
   },
