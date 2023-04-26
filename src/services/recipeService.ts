@@ -32,9 +32,16 @@ const recipeService = {
    * @param
    * @returns recipe object
    */
-  create: async (name: string, agribalyseIds: number[]): Promise<Recipe> => {
+  create: async (
+    name: string,
+    description: string,
+    calcul: string,
+    agribalyseIds: number[]
+  ): Promise<Recipe> => {
     const recipe = new Recipe();
     recipe.name = name;
+    recipe.description = description;
+    recipe.calcul = calcul;
     const agribalyses = [];
     for (let agribalyseId of agribalyseIds) {
       const agribalyse = await agribalyseRepository.findOneByOrFail({

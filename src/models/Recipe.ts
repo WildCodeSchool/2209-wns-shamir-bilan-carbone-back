@@ -30,7 +30,7 @@ export class Recipe {
   @Field(() => [Agribalyse], { nullable: true })
   // @Column("json", { nullable: true })
   @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
-    cascade: true,
+    cascade: false,
   })
   agribalyses?: Agribalyse[];
 }

@@ -36,10 +36,12 @@ export class RecipeResolver {
   @Mutation(() => Recipe)
   async createRecipe(
     @Arg("name", () => String) name: string,
+    @Arg("description", () => String) description: string,
+    @Arg("empreinte", () => String) empreinte: string,
     @Arg("agribalyseIds", () => [Int]) agribalyseIds: number[]
   ): Promise<Recipe> {
     console.log(agribalyseIds);
     console.log(name);
-    return recipeService.create(name, agribalyseIds);
+    return recipeService.create(name, description, empreinte, agribalyseIds);
   }
 }

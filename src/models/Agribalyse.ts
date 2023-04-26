@@ -26,6 +26,8 @@ export default class Agribalyse {
   @Column({ nullable: true })
   empreinte?: string;
 
-  @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses)
+  @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses, {
+    onDelete: "SET NULL",
+  })
   recipe: Recipe;
 }
