@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 import { Recipe } from "../models/Recipe";
 
@@ -26,8 +33,10 @@ export default class Agribalyse {
   @Column({ nullable: true })
   empreinte?: string;
 
-  @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses, {
-    onDelete: "SET NULL",
-  })
-  recipe: Recipe;
+  // @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses)
+  // recipe: Recipe;
+  @ManyToMany(() => Recipe, (recipe) => recipe.agribalyses)
+  @JoinTable()
+  // recipes: Recipe[];
+  recipe: Recipe[];
 }

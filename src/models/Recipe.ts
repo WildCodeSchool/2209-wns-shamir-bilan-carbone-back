@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
+  ManyToMany,
   JoinColumn,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
@@ -27,10 +28,15 @@ export class Recipe {
   @Column({ nullable: true })
   calcul?: string;
 
+  // @Field(() => [Agribalyse], { nullable: true })
+  // @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+  //   cascade: false,
+  // })
+  // agribalyses?: Agribalyse[];
+
   @Field(() => [Agribalyse], { nullable: true })
-  // @Column("json", { nullable: true })
-  @OneToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
-    cascade: false,
+  @ManyToMany(() => Agribalyse, (agribalyse) => agribalyse.recipe, {
+    cascade: true,
   })
   agribalyses?: Agribalyse[];
 }
