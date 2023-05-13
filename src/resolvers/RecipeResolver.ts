@@ -33,6 +33,7 @@ export class RecipeResolver {
     }));
   }
 
+  @Authorized("ADMIN")
   @Mutation(() => Recipe)
   async createRecipe(
     @Arg("name", () => String) name: string,
