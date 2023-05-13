@@ -7,7 +7,7 @@ import { MyContext } from "../types/MyContext";
 
 @Resolver(User)
 export class UserResolver {
-  @Authorized("ADMIN")
+  // @Authorized("ADMIN")
   @Query(() => [User])
   async getAllUsers(): Promise<User[]> {
     return await userService.getAll();
@@ -16,6 +16,11 @@ export class UserResolver {
   @Query(() => User)
   async findUserByEmail(@Arg("email") email: string): Promise<User> {
     return await userService.getByEmail(email);
+  }
+
+  @Query(() => User)
+  async findUserById(@Arg("id") id: number): Promise<User> {
+    return await userService.getById(id);
   }
 
   @Mutation(() => User)
@@ -41,16 +46,17 @@ export class UserResolver {
   async updateUser(
     @Arg("id") id: number,
     @Arg("email") email: string,
-    @Arg("password") password: string,
     @Arg("firstName") firstName: string,
-    @Arg("lastName") lastName: string
+    @Arg("lastName") lastName: string,
+    // @Arg("password") password: string,
+    @Arg("password", { nullable: true }) password?: string
   ): Promise<User> {
     const updateUser = await userService.update(
       id,
       email,
-      password,
       firstName,
-      lastName
+      lastName,
+      password
     );
     return updateUser;
   }
@@ -66,6 +72,7 @@ export class UserResolver {
     }
   }
 
+  // Sing In User
   @Mutation(() => String)
   async getToken(
     @Arg("email") email: string,
@@ -75,7 +82,7 @@ export class UserResolver {
     try {
       // get user from DB by its email
       const userFromDB = await userService.getByEmail(email);
-      console.log(userFromDB);
+
       // verify if both password match
       if (
         await authService.verifyPassword(password, userFromDB.hashed_password)
@@ -84,7 +91,8 @@ export class UserResolver {
         const token = authService.signJwt({
           email: userFromDB.email,
           role: userFromDB.role,
-          id: userFromDB.id,
+          firstName: userFromDB.firstName,
+          // id: userFromDB.id,
         });
 
         // adding this code
@@ -107,7 +115,7 @@ export class UserResolver {
         throw new Error();
       }
     } catch (e) {
-      throw new Error("invalid Auth");
+      throw new Error("Invalid Auth");
     }
   }
 

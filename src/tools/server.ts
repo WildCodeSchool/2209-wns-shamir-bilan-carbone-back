@@ -7,6 +7,7 @@ import authService from "../services/authService";
 import { ApiBaseCarboneResolver } from "../resolvers/apiBaseCarboneResolver";
 import { ApiAgribalyseResolver } from "../resolvers/apiAgribalyseResolver";
 import { AgribalyseResolver } from "../resolvers/AgribalyseResolver";
+import { RecipeResolver } from "../resolvers/RecipeResolver";
 
 async function createServer(): Promise<ApolloServer> {
   dotenv.config();
@@ -17,7 +18,9 @@ async function createServer(): Promise<ApolloServer> {
       ApiBaseCarboneResolver,
       ApiAgribalyseResolver,
       AgribalyseResolver,
+      RecipeResolver,
     ],
+    validate: { forbidUnknownValues: false },
     authChecker: ({ context }, roles) => {
       console.log("CONTEXT", context);
       console.log("ROLES", roles);

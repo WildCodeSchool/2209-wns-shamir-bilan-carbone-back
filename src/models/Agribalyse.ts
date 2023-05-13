@@ -1,16 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { ObjectType, Field } from "type-graphql";
+import { Recipe } from "../models/Recipe";
 
 @ObjectType()
 @Entity()
 export default class Agribalyse {
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   idAgr: string;
 
   @Field({ nullable: true })
@@ -24,4 +32,11 @@ export default class Agribalyse {
   @Field({ nullable: true })
   @Column({ nullable: true })
   empreinte?: string;
+
+  // @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses)
+  // recipe: Recipe;
+  @ManyToMany(() => Recipe, (recipe) => recipe.agribalyses)
+  @JoinTable()
+  // recipes: Recipe[];
+  recipe: Recipe[];
 }

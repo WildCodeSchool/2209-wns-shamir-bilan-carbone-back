@@ -58,19 +58,21 @@ export default {
   update: async (
     id: number,
     email: string,
-    password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    password?: string
   ): Promise<User> => {
     // find the user with email
     const user = await repository.findOne({ where: { id } });
-    if (user === null) throw new Error("User not found, sweetheart");
+    if (user === null) throw new Error("User not found");
 
     // update user fields
     user.firstName = firstName;
     user.lastName = lastName;
-    const salt = bcrypt.genSaltSync(10);
-    user.hashed_password = bcrypt.hashSync(password, salt);
+    if (password) {
+      const salt = bcrypt.genSaltSync(10);
+      user.hashed_password = bcrypt.hashSync(password, salt);
+    }
 
     // save updated user
     return await repository.save(user);
@@ -90,7 +92,7 @@ export default {
 
   /**
    * Returns the user with the specified id
-   * @param id user id
+   * @param {number} id user id
    * @returns User object
    */
   getById: async (id: number): Promise<User> => {
