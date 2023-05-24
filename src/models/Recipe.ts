@@ -2,12 +2,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   ManyToMany,
-  JoinColumn,
+  JoinTable,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
 import Agribalyse from "../models/Agribalyse";
+import Consumption from "../models/Consumption";
 
 @ObjectType()
 @Entity()
@@ -39,6 +39,13 @@ export class Recipe {
     cascade: true,
   })
   agribalyses?: Agribalyse[];
+
+  // @Field(() => [Consumption], { nullable: true })
+  @ManyToMany(() => Consumption, (consumption) => consumption.recipe, {
+    cascade: true,
+  })
+  @JoinTable()
+  consumptions?: Consumption[];
 }
 
 export default Recipe;

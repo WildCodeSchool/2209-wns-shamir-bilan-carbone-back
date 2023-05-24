@@ -4,6 +4,7 @@ import ApiAgribalyse from "../models/ApiAgribalyse";
 import { User } from "../models/User";
 import Agribalyse from "../models/Agribalyse";
 import { Recipe } from "../models/Recipe";
+import { Consumption } from "../models/Consumption";
 
 export const dataSource = new DataSource({
   type: "postgres",
@@ -13,5 +14,5 @@ export const dataSource = new DataSource({
   password: "admin",
   database: "carbone",
   synchronize: true,
-  entities: [User, BaseCarbone, ApiAgribalyse, Agribalyse, Recipe],
+  entities: [User, BaseCarbone, ApiAgribalyse, Agribalyse, Recipe, Consumption],
 });

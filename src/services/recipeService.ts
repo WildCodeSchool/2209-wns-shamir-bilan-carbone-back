@@ -1,6 +1,7 @@
 import { Repository } from "typeorm";
 import { Recipe } from "../models/Recipe";
 import Agribalyse from "../models/Agribalyse";
+import Consumption from "models/Consumption";
 import { dataSource } from "../tools/utils";
 
 const recipeRepository: Repository<Recipe> = dataSource.getRepository(Recipe);
