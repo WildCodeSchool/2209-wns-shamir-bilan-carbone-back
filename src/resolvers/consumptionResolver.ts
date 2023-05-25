@@ -18,17 +18,19 @@ export class ConsumptionResolver {
   }
 
   @Mutation(() => Consumption)
-  async createConsumptionWithRecipe(
+  async createConsumptionWithRecipeUser(
     @Arg("empreinte") empreinte: string,
     @Arg("description") description: string,
     @Arg("createdAt") createdAt: Date,
-    @Arg("recipeIds", () => [Int]) recipeIds: number[]
+    @Arg("recipeIds", () => [Int]) recipeIds: number[],
+    @Arg("userId") userId: number
   ): Promise<Consumption> {
-    return await consumptionService.createConsRecipe(
+    return await consumptionService.createConsRecipeUser(
       empreinte,
       description,
       createdAt,
-      recipeIds
+      recipeIds,
+      userId
     );
   }
 }
