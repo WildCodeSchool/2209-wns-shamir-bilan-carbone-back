@@ -33,7 +33,8 @@ export class Consumption {
   @Field(() => [Recipe], { nullable: true })
   @ManyToMany(() => Recipe, (recipe) => recipe.consumptions)
   @JoinTable()
-  recipe?: Recipe[];
+  // recipe?: Recipe[];
+  recipes?: Recipe[];
 
   @Field(() => User, { nullable: true })
   @OneToOne(() => User, (user) => user.consumption)

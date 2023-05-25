@@ -41,7 +41,7 @@ export class Recipe {
   agribalyses?: Agribalyse[];
 
   // @Field(() => [Consumption], { nullable: true })
-  @ManyToMany(() => Consumption, (consumption) => consumption.recipe, {
+  @ManyToMany(() => Consumption, (consumption) => consumption.recipes, {
     cascade: true,
   })
   @JoinTable()

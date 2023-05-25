@@ -16,4 +16,19 @@ export class ConsumptionResolver {
   async getAllConsumptions(): Promise<Consumption[]> {
     return await consumptionService.getAll();
   }
+
+  @Mutation(() => Consumption)
+  async createConsumptionWithRecipe(
+    @Arg("empreinte") empreinte: string,
+    @Arg("description") description: string,
+    @Arg("createdAt") createdAt: Date,
+    @Arg("recipeIds", () => [Int]) recipeIds: number[]
+  ): Promise<Consumption> {
+    return await consumptionService.createConsRecipe(
+      empreinte,
+      description,
+      createdAt,
+      recipeIds
+    );
+  }
 }
