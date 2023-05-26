@@ -8,6 +8,7 @@ import { ApiBaseCarboneResolver } from "../resolvers/apiBaseCarboneResolver";
 import { ApiAgribalyseResolver } from "../resolvers/apiAgribalyseResolver";
 import { AgribalyseResolver } from "../resolvers/AgribalyseResolver";
 import { RecipeResolver } from "../resolvers/RecipeResolver";
+import { ConsumptionResolver } from "../resolvers/consumptionResolver";
 
 async function createServer(): Promise<ApolloServer> {
   dotenv.config();
@@ -19,6 +20,7 @@ async function createServer(): Promise<ApolloServer> {
       ApiAgribalyseResolver,
       AgribalyseResolver,
       RecipeResolver,
+      ConsumptionResolver,
     ],
     validate: { forbidUnknownValues: false },
     authChecker: ({ context }, roles) => {
