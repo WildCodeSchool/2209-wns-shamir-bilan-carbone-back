@@ -16,7 +16,8 @@ const consumptionService = {
    * @returns array of Consumptions
    */
   getAll: async (): Promise<Consumption[]> => {
-    return await consumptionRepository.find();
+    // return await consumptionRepository.find();
+    return await consumptionRepository.find({ relations: ["user"] });
   },
 
   /**
@@ -52,6 +53,7 @@ const consumptionService = {
       throw new Error(`User id: ${userId} not found`);
     }
 
+    // consumption.user = user;
     consumption.user = user;
 
     return consumptionRepository.save(consumption);

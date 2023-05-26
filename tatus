@@ -1,0 +1,80 @@
+[1mdiff --git a/src/models/Consumption.ts b/src/models/Consumption.ts[m
+[1mindex 3502659..172ffe9 100644[m
+[1m--- a/src/models/Consumption.ts[m
+[1m+++ b/src/models/Consumption.ts[m
+[36m@@ -5,6 +5,7 @@[m [mimport {[m
+   ManyToMany,[m
+   OneToOne,[m
+   JoinTable,[m
+[32m+[m[32m  ManyToOne,[m[41m[m
+   JoinColumn,[m
+ } from "typeorm";[m
+ import { ObjectType, Field, ID } from "type-graphql";[m
+[36m@@ -36,9 +37,14 @@[m [mexport class Consumption {[m
+   // recipe?: Recipe[];[m
+   recipes?: Recipe[];[m
+ [m
+[32m+[m[32m  // @Field(() => User, { nullable: true })[m[41m[m
+[32m+[m[32m  // @OneToOne(() => User, (user) => user.consumption)[m[41m[m
+[32m+[m[32m  // @JoinColumn()[m[41m[m
+[32m+[m[32m  // user?: User;[m[41m[m
+[32m+[m[41m[m
+   @Field(() => User, { nullable: true })[m
+[31m-  @OneToOne(() => User, (user) => user.consumption)[m
+[31m-  @JoinColumn()[m
+[32m+[m[32m  @ManyToOne(() => User, (user: User) => user.consumptions)[m[41m[m
+[32m+[m[32m  @JoinColumn({ name: "user_id" })[m[41m[m
+   user?: User;[m
+ }[m
+ [m
+[1mdiff --git a/src/models/User.ts b/src/models/User.ts[m
+[1mindex 51f7617..cb7e5ba 100644[m
+[1m--- a/src/models/User.ts[m
+[1m+++ b/src/models/User.ts[m
+[36m@@ -3,6 +3,7 @@[m [mimport {[m
+   Column,[m
+   PrimaryGeneratedColumn,[m
+   OneToOne,[m
+[32m+[m[32m  OneToMany,[m
+   JoinColumn,[m
+ } from "typeorm";[m
+ import { ObjectType, Field, ID } from "type-graphql";[m
+[36m@@ -36,8 +37,12 @@[m [mexport class User {[m
+   @Column()[m
+   lastName: string;[m
+ [m
+[31m-  @Field(() => Consumption, { nullable: true })[m
+[31m-  @OneToOne(() => Consumption, (consumption) => consumption.user)[m
+[31m-  @JoinColumn()[m
+[31m-  consumption?: Consumption;[m
+[32m+[m[32m  // @Field(() => Consumption, { nullable: true })[m
+[32m+[m[32m  // @OneToOne(() => Consumption, (consumption) => consumption.user)[m
+[32m+[m[32m  // @JoinColumn()[m
+[32m+[m[32m  // consumption?: Consumption;[m
+[32m+[m
+[32m+[m[32m  @Field(() => [Consumption], { nullable: true })[m
+[32m+[m[32m  @OneToMany(() => Consumption, (consumption: Consumption) => consumption.user)[m
+[32m+[m[32m  consumptions?: Consumption[];[m
+ }[m
+[1mdiff --git a/src/services/consumptionService.ts b/src/services/consumptionService.ts[m
+[1mindex 1feeebf..9f4855b 100644[m
+[1m--- a/src/services/consumptionService.ts[m
+[1m+++ b/src/services/consumptionService.ts[m
+[36m@@ -16,7 +16,8 @@[m [mconst consumptionService = {[m
+    * @returns array of Consumptions[m
+    */[m
+   getAll: async (): Promise<Consumption[]> => {[m
+[31m-    return await consumptionRepository.find();[m
+[32m+[m[32m    // return await consumptionRepository.find();[m[41m[m
+[32m+[m[32m    return await consumptionRepository.find({ relations: ["user"] });[m[41m[m
+   },[m
+ [m
+   /**[m
+[36m@@ -52,6 +53,7 @@[m [mconst consumptionService = {[m
+       throw new Error(`User id: ${userId} not found`);[m
+     }[m
+ [m
+[32m+[m[32m    // consumption.user = user;[m[41m[m
+     consumption.user = user;[m
+ [m
+     return consumptionRepository.save(consumption);[m
