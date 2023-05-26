@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToOne,
+  OneToMany,
   JoinColumn,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
@@ -36,8 +37,12 @@ export class User {
   @Column()
   lastName: string;
 
-  @Field(() => Consumption, { nullable: true })
-  @OneToOne(() => Consumption, (consumption) => consumption.user)
-  @JoinColumn()
-  consumption?: Consumption;
+  // @Field(() => Consumption, { nullable: true })
+  // @OneToOne(() => Consumption, (consumption) => consumption.user)
+  // @JoinColumn()
+  // consumption?: Consumption;
+
+  @Field(() => [Consumption], { nullable: true })
+  @OneToMany(() => Consumption, (consumption: Consumption) => consumption.user)
+  consumptions?: Consumption[];
 }
