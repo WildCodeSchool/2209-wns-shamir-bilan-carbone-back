@@ -32,10 +32,7 @@ export default class Agribalyse {
   @Column({ nullable: true })
   empreinte?: string;
 
-  // @ManyToOne(() => Recipe, (recipe) => recipe.agribalyses)
-  // recipe: Recipe;
   @ManyToMany(() => Recipe, (recipe) => recipe.agribalyses)
   @JoinTable()
-  // recipes: Recipe[];
   recipe: Recipe[];
 }

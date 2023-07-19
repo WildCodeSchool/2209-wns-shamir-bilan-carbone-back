@@ -1,20 +1,12 @@
 import { Consumption } from "../models/Consumption";
 import consumptionService from "../services/consumptionService";
-import {
-  Arg,
-  Mutation,
-  Query,
-  Resolver,
-  Ctx,
-  Authorized,
-  Int,
-} from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 
 @Resolver(Consumption)
 export class ConsumptionResolver {
   @Query(() => [Consumption])
   async getAllConsumptions(): Promise<Consumption[]> {
-    return await consumptionService.getAll();
+    return consumptionService.getAll();
   }
 
   @Mutation(() => Consumption)
@@ -22,15 +14,30 @@ export class ConsumptionResolver {
     @Arg("empreinte") empreinte: string,
     @Arg("description") description: string,
     @Arg("createdAt") createdAt: Date,
-    @Arg("recipeIds", () => [Int]) recipeIds: number[],
+    // @Arg("recipeIds", () => [Int]) recipeIds: number[],
+    @Arg("recipeIds", () => [String]) recipeIds: string[],
     @Arg("userId") userId: number
   ): Promise<Consumption> {
-    return await consumptionService.createConsRecipeUser(
+    return consumptionService.createConsRecipeUser(
       empreinte,
       description,
       createdAt,
       recipeIds,
       userId
     );
+  }
+
+  // get All Consumptions By UserId
+  @Query(() => [Consumption])
+  async getConsByUser(@Arg("userId") userId: number): Promise<Consumption[]> {
+    return consumptionService.getConsByUserId(userId);
+  }
+
+  // get user's Weekly consumption
+  @Query(() => [Consumption])
+  async getWeeklyConsumption(
+    @Arg("userId") userId: number
+  ): Promise<Consumption[]> {
+    return consumptionService.getByWConsumption(userId);
   }
 }
