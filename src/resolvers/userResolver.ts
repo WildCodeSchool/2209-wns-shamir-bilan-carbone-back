@@ -95,7 +95,6 @@ export class UserResolver {
           // id: userFromDB.id,
         });
 
-        // adding this code
         // set user information in the context object
         // ctx.user = {
         //   id: userFromDB.id,
@@ -107,8 +106,7 @@ export class UserResolver {
         // };
 
         // console.log(ctx.user);
-        //end of added code
-
+        console.log("theToken", token);
         // return the token
         return token;
       } else {
