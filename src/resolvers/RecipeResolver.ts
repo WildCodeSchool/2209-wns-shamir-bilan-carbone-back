@@ -12,10 +12,11 @@ import {
 } from "type-graphql";
 import { CreateRecipeInputType } from "../inputs/CreateRecipeInputType";
 import agribalyseService from "services/agribalyseService";
+import { RecipeIdsInput } from "../inputs/RecipeIdsInput";
 
 @Resolver(Recipe)
 export class RecipeResolver {
-  // @Authorized("ADMIN")
+  @Authorized("ADMIN")
   @Query(() => [Recipe]) // pass the return type on the first parameter.
   async getAllRecipes(): Promise<Recipe[]> {
     return await recipeService.getAll();
@@ -32,6 +33,22 @@ export class RecipeResolver {
       agribalyses: recipe.agribalyses,
     }));
   }
+
+  @Query(() => Recipe, { nullable: true })
+  async getRecipeById(
+    @Arg("recipeId") recipeId: number
+  ): Promise<Recipe | null> {
+    return recipeService.getById(recipeId);
+  }
+
+  //new
+  @Query(() => [Recipe])
+  async getRecipesByIds(
+    @Arg("input") recipeIds: RecipeIdsInput
+  ): Promise<Recipe[]> {
+    return recipeService.getByIds(recipeIds);
+  }
+  //end new
 
   @Authorized("ADMIN")
   @Mutation(() => Recipe)

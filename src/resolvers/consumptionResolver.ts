@@ -10,6 +10,21 @@ export class ConsumptionResolver {
   }
 
   @Mutation(() => Consumption)
+  async createConsumption(
+    @Arg("empreinte") empreinte: string,
+    @Arg("description") description: string,
+    @Arg("createdAt") createdAt: Date,
+    @Arg("userId") userId: number
+  ): Promise<Consumption> {
+    return consumptionService.createConsumption(
+      empreinte,
+      description,
+      createdAt,
+      userId
+    );
+  }
+
+  @Mutation(() => Consumption)
   async createConsumptionWithRecipeUser(
     @Arg("empreinte") empreinte: string,
     @Arg("description") description: string,
@@ -34,10 +49,21 @@ export class ConsumptionResolver {
   }
 
   // get user's Weekly consumption
-  @Query(() => [Consumption])
-  async getWeeklyConsumption(
-    @Arg("userId") userId: number
-  ): Promise<Consumption[]> {
-    return consumptionService.getByWConsumption(userId);
-  }
+  // @Query(() => [Consumption])
+  // async getWeeklyConsumption(
+  //   @Arg("userId") userId: number
+  // ): Promise<Consumption[]> {
+  //   const weeklyConsumption = await consumptionService.getByWConsumption(
+  //     userId
+  //   );
+  //   console.log("wanteddata", weeklyConsumption);
+  // const result = weeklyConsumption.map((item) => {
+  //   const consumption = new Consumption();
+  //   consumption.weeklyEmpreinte = parseFloat(item.sum);
+  //   consumption.week = item.weekOfYear;
+  //   // Set other fields if needed
+  //   return consumption;
+  // });
+  // return result;
+  // }
 }

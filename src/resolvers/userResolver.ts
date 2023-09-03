@@ -92,7 +92,7 @@ export class UserResolver {
           email: userFromDB.email,
           role: userFromDB.role,
           firstName: userFromDB.firstName,
-          // id: userFromDB.id,
+          id: userFromDB.id,
         });
 
         // adding this code

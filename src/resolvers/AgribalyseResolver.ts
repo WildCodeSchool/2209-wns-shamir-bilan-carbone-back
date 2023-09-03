@@ -5,7 +5,7 @@ import agribalyseService from "../services/agribalyseService";
 
 @Resolver(Agribalyse)
 export class AgribalyseResolver {
-  @Authorized(["ADMIN", "USER"])
+  // @Authorized(["ADMIN", "USER"])
   @Query(() => [Agribalyse])
   async getAllAliments(): Promise<Agribalyse[]> {
     return await agribalyseService.getAllAliments();

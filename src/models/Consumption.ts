@@ -37,11 +37,6 @@ export class Consumption {
   // recipe?: Recipe[];
   recipes?: Recipe[];
 
-  // @Field(() => User, { nullable: true })
-  // @OneToOne(() => User, (user) => user.consumption)
-  // @JoinColumn()
-  // user?: User;
-
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user: User) => user.consumptions)
   @JoinColumn({ name: "user_id" })

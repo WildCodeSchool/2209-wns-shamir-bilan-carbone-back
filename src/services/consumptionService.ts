@@ -9,44 +9,65 @@ const consumptionRepository: Repository<Consumption> =
 const recipeRepository: Repository<Recipe> = dataSource.getRepository(Recipe);
 const userRepository: Repository<User> = dataSource.getRepository(User);
 
-// function getWeekNumber(timestamp: number): number {
-//   // Create a new date object using the provided timestamp
-//   const date = new Date(timestamp);
-
-//   // Set the date to the first day of the year
-//   date.setMonth(0, 1);
-
-//   // Get the day of the week for the first day of the year
-//   const firstDayOfWeek = date.getDay();
-
-//   // Adjust the first day of the week to be Monday (0-based index)
-//   const adjustedFirstDayOfWeek = (firstDayOfWeek + 6) % 7;
-
-//   // Calculate the number of days between the first day of the year and the input date
-//   const timeDiff = timestamp - date.getTime();
-//   const dayDiff = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
-
-//   // Calculate the week number based on the number of days and the adjusted first day of the week
-//   const weekNumber = Math.floor((dayDiff + adjustedFirstDayOfWeek) / 7) + 1;
-
-//   return weekNumber;
-// }
-
-// export default {
 const consumptionService = {
   /**
-   * Returns list of consumptions from DB
+   * Returns list of consumptions from DB sorted by Date
    * @returns array of Consumptions
    */
   getAll: async (): Promise<Consumption[]> => {
-    const consumptions = await consumptionRepository.find({
-      relations: ["user"],
-    });
+    // Use the query builder to sort by createdAt in ascending order
+    const consumptions = await consumptionRepository
+      .createQueryBuilder("consumption")
+      .leftJoinAndSelect("consumption.user", "user")
+      .orderBy("consumption.createdAt", "ASC")
+      .getMany();
+    // const consumptions = await consumptionRepository.find({
+    //   relations: ["user"],
+    // });
     return consumptions;
   },
 
   /**
    *
+   * @param empreinte
+   * @param description
+   * @param createdAt
+   * @param userId
+   * @returns
+   */
+  createConsumption: async (
+    empreinte: string,
+    description: string,
+    createdAt: Date,
+    userId: number
+  ): Promise<Consumption> => {
+    const consumption = new Consumption();
+
+    consumption.empreinte = empreinte;
+    consumption.description = description;
+
+    const date = new Date();
+    const timestamp = date.getTime();
+    consumption.createdAt = date;
+
+    const user = await userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new Error(`User id: ${userId} not found`);
+    }
+
+    consumption.user = user;
+
+    return consumptionRepository.save(consumption);
+  },
+
+  /**
+   *
+   * @param empreinte
+   * @param description
+   * @param createdAt
+   * @param recipeIds
+   * @param userId
+   * @returns
    */
   createConsRecipeUser: async (
     empreinte: string,
@@ -117,17 +138,18 @@ const consumptionService = {
   getByWConsumption: async (userId: number): Promise<Consumption[]> => {
     const wEmpreinte: Consumption[] = await consumptionRepository
       .createQueryBuilder("consumption")
-      // .select("SUM(consumption.empreinte)", "sum")
-      // .addSelect("CAST(consumption.empreinte AS INTEGER)", "sum")
+      // Calculate the sum of empreinte (carbon footprint) and format it as numeric
       .addSelect("SUM(CAST(consumption.empreinte AS numeric))", "sum")
-      .addSelect("to_char(consumption.createdAt, 'S\"%v\" YYYY')", "week")
-      // .addSelect('DATE_FORMAT(consumption.createdAt, "S%v %Y")', "week")
+      // Format the createdAt timestamp as 'IW YYYY' (e.g., '35 2023')
+      .addSelect("to_char(consumption.createdAt, 'IW YYYY')", "weekOfYear")
+      // Filter the data for a specific user ID
       .where("consumption.user_id = :userId", { userId })
-      // .groupBy("week")
-      .groupBy("consumption.id, week")
+      //  Group the results by both consumption.id and the formatted week and year / instead of grouping "groupByYear"
+      .groupBy("consumption.id, to_char(consumption.createdAt, 'IW YYYY')")
+      // Retrieve the result as raw data in an array
       .getRawMany();
 
-    console.log("wEmpreinte", wEmpreinte);
+    // console.log("wEmpreinte", wEmpreinte);
     return wEmpreinte;
   },
 };
